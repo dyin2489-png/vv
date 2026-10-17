@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#061326">
+<title>BATTLE PANEL · UI Demo</title>
+<style>
+:root{--bg:#06101f;--panel:#0b1b31;--panel2:#0e2440;--line:#1c4774;--blue:#1687ff;--cyan:#32d9ff;--text:#e7f2ff;--muted:#8da9ca;--green:#23e0b0}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#102d50 0,#06101f 55%);color:var(--text);font-family:system-ui,-apple-system,"Noto Sans SC",sans-serif}
+button,input{font:inherit}button{cursor:pointer;color:inherit}
+.top{padding:18px 16px 14px;border-bottom:1px solid #16395d;background:linear-gradient(120deg,#0b2441,#071323 65%);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{font-size:22px;font-weight:900;letter-spacing:1px}.sub{font-size:11px;color:var(--muted);margin-top:4px;letter-spacing:2px}
+.status{border:1px solid #1d4d6c;background:#061c2c;border-radius:12px;padding:9px 12px;font-size:12px;white-space:nowrap}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);margin-right:7px;box-shadow:0 0 12px #23e0b0}
+.shell{display:grid;grid-template-columns:164px minmax(0,1fr);min-height:calc(100vh - 88px)}
+nav{padding:12px 10px;border-right:1px solid #173454;background:#061323}
+.navbtn{width:100%;text-align:left;border:1px solid transparent;background:transparent;color:#9fb8d9;border-radius:10px;padding:12px 11px;margin:4px 0;font-size:13px}
+.navbtn.active{background:linear-gradient(100deg,#0878ff,#1454d4);color:white;box-shadow:0 5px 20px #006bff30}
+main{padding:16px;min-width:0}.hero{border:1px solid var(--line);border-radius:14px;padding:16px;background:linear-gradient(110deg,#102d4c,#0a1b30);display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.hero h1{font-size:19px;margin:0 0 5px}.muted{color:var(--muted);font-size:12px}.pill{border:1px solid #245b80;background:#082539;border-radius:999px;padding:7px 10px;color:var(--cyan);font-size:11px;white-space:nowrap}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.card{border:1px solid var(--line);border-radius:13px;background:linear-gradient(145deg,#0d213a,#09172a);padding:14px;min-width:0}.card h2{font-size:15px;margin:0 0 12px;display:flex;justify-content:space-between;align-items:center}.row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-top:1px solid #173454;font-size:13px}.row:first-of-type{border-top:0}.hint{font-size:11px;color:var(--muted);margin-top:3px}
+.switch{appearance:none;width:39px;height:22px;border-radius:99px;background:#30445f;position:relative;flex:none;outline:none;transition:.2s}.switch:before{content:"";position:absolute;width:16px;height:16px;border-radius:50%;background:#e6f3ff;left:3px;top:3px;transition:.2s}.switch:checked{background:var(--blue);box-shadow:0 0 14px #1687ff55}.switch:checked:before{left:20px}
+input[type=range]{width:100%;accent-color:var(--blue)}select{background:#0b2540;color:var(--text);border:1px solid #24527a;border-radius:7px;padding:7px;max-width:130px}
+.action{border:1px solid #1d5a8d;border-radius:10px;background:#0a2947;padding:12px 10px;font-weight:700;font-size:12px}.action.primary{background:linear-gradient(100deg,#087cff,#1456dc);border:0}.actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.full{grid-column:1/-1}.notice{border:1px solid #72572b;background:#241d12;color:#f4d69a;border-radius:10px;padding:11px 12px;font-size:11px;line-height:1.65;margin-top:12px}
+.hidden{display:none}.rangehead{display:flex;justify-content:space-between;color:#b8cce5;font-size:12px;margin:10px 0 2px}.footer{font-size:10px;color:#7895b8;text-align:center;padding:16px}
+@media(max-width:620px){.shell{grid-template-columns:74px minmax(0,1fr)}nav{padding:9px 5px}.navbtn{font-size:0;text-align:center;padding:13px 2px}.navbtn span{font-size:19px;display:block}.top{padding:14px 12px}.brand{font-size:17px}.status{font-size:10px;padding:8px}.grid{grid-template-columns:1fr}main{padding:10px}.hero{padding:12px}.hero h1{font-size:16px}.card{padding:12px}.sub{font-size:9px}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div><div class="brand">BATTLE PANEL <span style="color:var(--cyan)">/ UI</span></div><div class="sub">MOBILE GAME COMPANION · DEMO</div></div>
+  <div class="status"><span class="dot"></span><span id="connection">演示模式</span><div class="muted" style="margin:5px 0 0 15px">UI build 0.1.0</div></div>
+</header>
+<div class="shell">
+<nav>
+<button class="navbtn active" data-page="home"><span>⌂</span> 首页</button>
+<button class="navbtn" data-page="aim"><span>◎</span> 瞄准面板</button>
+<button class="navbtn" data-page="loot"><span>▣</span> 物资清单</button>
+<button class="navbtn" data-page="visual"><span>◈</span> 画面设置</button>
+<button class="navbtn" data-page="settings"><span>⚙</span> 设置</button>
+</nav>
+<main>
+<section id="home" class="page">
+  <div class="hero"><div><h1>战场控制台</h1><div class="muted">交互式 UI 原型 · 所有选项仅用于演示</div></div><span class="pill">● LOCAL DEMO</span></div>
+  <div class="grid">
+    <div class="card"><h2>快速状态 <span style="color:var(--green);font-size:11px">● 正常</span></h2>
+      <div class="row"><span>界面状态</span><b>已加载</b></div><div class="row"><span>游戏连接</span><b style="color:var(--muted)">未连接</b></div><div class="row"><span>运行模式</span><b>演示</b></div>
+    </div>
+    <div class="card"><h2>快捷操作</h2><div class="actions"><button class="action primary" id="enableAll">启用演示开关</button><button class="action" id="disableAll">全部关闭</button><button class="action" data-goto="visual">画面设置</button><button class="action" data-goto="settings">打开设置</button></div></div>
+    <div class="card full"><h2>功能模块 <span class="muted">点击进入</span></h2><div class="actions"><button class="action" data-goto="aim">◎ 瞄准面板</button><button class="action" data-goto="loot">▣ 物资清单</button><button class="action" data-goto="visual">◈ 画面设置</button><button class="action" data-goto="settings">⚙ 常规设置</button></div></div>
+  </div>
+  <div class="notice">安全说明：这是独立的界面演示，不读取、修改或控制 PUBG MOBILE，也不包含自瞄、透视、自动射击或其他作弊实现。</div>
+</section>
+<section id="aim" class="page hidden">
+  <div class="hero"><div><h1>瞄准面板</h1><div class="muted">仅展示 UI 控件，不连接游戏</div></div><span class="pill">DEMO ONLY</span></div>
+  <div class="grid">
+    <div class="card"><h2>训练辅助外观</h2>
+      <div class="row"><span>训练提示卡片</span><input class="switch" type="checkbox" checked></div>
+      <div class="row"><span>准星示意</span><input class="switch" type="checkbox"></div>
+      <div class="row"><span>按键提示</span><input class="switch" type="checkbox" checked></div>
+      <div class="rangehead"><span>灵敏度示意</span><b id="sensVal">50</b></div><input id="sens" type="range" min="1" max="100" value="50">
+    </div>
+    <div class="card"><h2>练习配置</h2>
+      <div class="row"><span>练习预设</span><select><option>平衡</option><option>低灵敏度</option><option>高灵敏度</option></select></div>
+      <div class="row"><span>提示音示意</span><input class="switch" type="checkbox"></div>
+      <div class="row"><span>显示状态标签</span><input class="switch" type="checkbox" checked></div>
+    </div>
+  </div>
+</section>
+<section id="loot" class="page hidden">
+  <div class="hero"><div><h1>物资清单</h1><div class="muted">个人清单与训练准备项</div></div><span class="pill">CHECKLIST</span></div>
+  <div class="grid"><div class="card"><h2>出发前检查</h2>
+    <div class="row"><label><input type="checkbox" checked> 背包空间</label></div><div class="row"><label><input type="checkbox"> 医疗物资</label></div><div class="row"><label><input type="checkbox"> 弹药储备</label></div><div class="row"><label><input type="checkbox"> 投掷物</label></div><div class="row"><label><input type="checkbox"> 防具状态</label></div>
+  </div><div class="card"><h2>备注</h2><textarea id="notes" placeholder="写下本局准备事项…" style="width:100%;min-height:150px;background:#07172a;color:var(--text);border:1px solid #24527a;border-radius:8px;padding:10px"></textarea><div class="hint">内容仅保存在当前页面，刷新后会清空。</div></div></div>
+</section>
+<section id="visual" class="page hidden">
+  <div class="hero"><div><h1>画面设置</h1><div class="muted">独立 UI 的视觉预设</div></div><span class="pill">DISPLAY</span></div>
+  <div class="grid"><div class="card"><h2>外观选项</h2>
+    <div class="row"><span>高对比度</span><input class="switch" type="checkbox" checked></div><div class="row"><span>减少动画</span><input class="switch" type="checkbox"></div><div class="row"><span>紧凑布局</span><input class="switch" type="checkbox"></div>
+    <div class="rangehead"><span>界面亮度</span><b id="brightVal">80%</b></div><input id="bright" type="range" min="30" max="100" value="80">
+  </div><div class="card"><h2>主题色</h2><div class="row"><span>强调色</span><select id="theme"><option value="blue">战术蓝</option><option value="cyan">电光青</option><option value="green">信号绿</option></select></div><div class="hint">更改主题色会立即预览。</div></div></div>
+</section>
+<section id="settings" class="page hidden">
+  <div class="hero"><div><h1>常规设置</h1><div class="muted">应用信息与演示行为</div></div><span class="pill">SETTINGS</span></div>
+  <div class="grid"><div class="card"><h2>应用偏好</h2><div class="row"><span>启动时显示首页</span><input class="switch" type="checkbox" checked></div><div class="row"><span>显示安全说明</span><input class="switch" type="checkbox" checked></div><div class="row"><span>按钮确认提示</span><input class="switch" type="checkbox"></div></div>
+  <div class="card"><h2>关于</h2><div class="row"><span>版本</span><b>0.1.0</b></div><div class="row"><span>平台</span><b>Android / Web</b></div><div class="row"><span>运行方式</span><b>本地演示</b></div><button class="action" id="reset" style="width:100%;margin-top:10px">重置界面状态</button></div></div>
+  <div class="notice">本项目仅用于 UI 学习与个人训练清单，不会与游戏进程交互。</div>
+</section>
+<div class="footer">BATTLE PANEL · UI PROTOTYPE · NOT CONNECTED TO GAME</div>
+</main>
+</div>
+<script>
+const pages=[...document.querySelectorAll('.page')], nav=[...document.querySelectorAll('.navbtn')];
+function go(id){pages.forEach(p=>p.classList.toggle('hidden',p.id!==id));nav.forEach(n=>n.classList.toggle('active',n.dataset.page===id));window.scrollTo(0,0)}
+nav.forEach(n=>n.addEventListener('click',()=>go(n.dataset.page)));
+document.querySelectorAll('[data-goto]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.goto)));
+document.getElementById('enableAll').addEventListener('click',()=>document.querySelectorAll('.switch').forEach(x=>x.checked=true));
+document.getElementById('disableAll').addEventListener('click',()=>document.querySelectorAll('.switch').forEach(x=>x.checked=false));
+document.getElementById('sens').addEventListener('input',e=>document.getElementById('sensVal').textContent=e.target.value);
+document.getElementById('bright').addEventListener('input',e=>document.getElementById('brightVal').textContent=e.target.value+'%');
+document.getElementById('theme').addEventListener('change',e=>{const m={blue:['#1687ff','#32d9ff'],cyan:['#00bcd4','#6df5ff'],green:['#18b66b','#53ffad']}[e.target.value];document.documentElement.style.setProperty('--blue',m[0]);document.documentElement.style.setProperty('--cyan',m[1])});
+document.getElementById('reset').addEventListener('click',()=>{document.querySelectorAll('.switch').forEach((x,i)=>x.checked=[0,2,4].includes(i));document.getElementById('sens').value=50;document.getElementById('sensVal').textContent='50';document.getElementById('bright').value=80;document.getElementById('brightVal').textContent='80%';document.getElementById('theme').value='blue';document.documentElement.style.setProperty('--blue','#1687ff');document.documentElement.style.setProperty('--cyan','#32d9ff');go('home')});
+</script>
+</body></html>
